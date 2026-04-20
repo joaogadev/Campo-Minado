@@ -10,7 +10,32 @@ public class Tabuleiro {
 
     private List<Campo> campos = new ArrayList<>();
 
-    public Tabuleiro() {
+    public Tabuleiro(int linhas, int colunas, int minas) {
+        this.linhas = linhas;
+        this.colunas = colunas;
+        this.minas = minas;
 
+        gerarCampos();
+        associarVizinhos();
+        sortearMinas();
+    }
+
+    private void sortearMinas() {
+    }
+
+    private void associarVizinhos() {
+        for (Campo c1: campos) {
+            for (Campo c2: campos) {
+                c1.adicionarVizinho(c2);
+            }
+        }
+    }
+
+    private void gerarCampos() {
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                campos.add(new Campo(l, c));
+            }
+        }
     }
 }
