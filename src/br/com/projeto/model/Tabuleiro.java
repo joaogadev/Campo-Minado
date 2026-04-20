@@ -21,14 +21,28 @@ public class Tabuleiro {
         sortearMinas();
     }
 
+    public void abrir(int linhas, int coluna) {
+        campos.parallelStream()
+                .filter(c -> c.getLinha() == linhas && c.getColuna() == coluna)
+                .findFirst()
+                .ifPresent(c -> c.abrir());
+    }
+
+    public void marcar(int linhas, int coluna) {
+        campos.parallelStream()
+                .filter(c -> c.getLinha() == linhas && c.getColuna() == coluna)
+                .findFirst()
+                .ifPresent(c -> c.alternarMarcacao());
+    }
+
     private void sortearMinas() {
         long minasArmadas = 0;
         Predicate<Campo> minado = c -> c.isMinado();
-        do {
-            minasArmadas = campos.stream().filter(minado).count();
+        while (minasArmadas < minas) {
             int aleatorio = (int)(Math.random() * campos.size());
             campos.get(aleatorio).minar();
-        } while (minasArmadas < minas);
+            minasArmadas = campos.stream().filter(minado).count();
+        }
     }
 
     private void associarVizinhos() {
@@ -56,5 +70,24 @@ public class Tabuleiro {
         sortearMinas();
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
+        int i = 0;
+        for (int l = 0; l < linhas; l++) {
+            for (int c = 0; c < colunas; c++) {
+                sb.append(" ");
+                sb.append(campos.get(i));
+                sb.append(" ");
+                i++;
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    public boolean isValido(int li, int co) {
+        return li >= 0 && li < linhas && co >= 0 && co < colunas;
+    }
 }
