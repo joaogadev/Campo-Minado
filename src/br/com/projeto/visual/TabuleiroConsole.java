@@ -54,9 +54,7 @@ public class TabuleiroConsole {
                     Iterator<Integer> xy = Arrays.stream(digitado.split(","))
                             .map(e -> Integer.parseInt(e.trim())).iterator();
 
-                    digitado = pegarValorDigitado("Digite (x, y): ");
-                    //verifica se o valor nn dá bo
-                    validarDigito(digitado);
+                    digitado = pegarValorDigitado("1 - abrir ou 2 - (Des)Marcar");
 
                     if ("1".equals(digitado)) {
                         tab.abrir(xy.next(), xy.next());
@@ -70,6 +68,7 @@ public class TabuleiroConsole {
 
             System.out.println("Você ganhou!!!");
         } catch (Explosion e) {
+            System.out.println(tab);
             System.out.println("Você perdeu!!");
         }
     }
