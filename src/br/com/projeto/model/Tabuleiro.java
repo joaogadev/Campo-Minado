@@ -1,5 +1,7 @@
 package br.com.projeto.model;
 
+import br.com.projeto.except.Explosion;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -22,10 +24,15 @@ public class Tabuleiro {
     }
 
     public void abrir(int linhas, int coluna) {
-        campos.parallelStream()
-                .filter(c -> c.getLinha() == linhas && c.getColuna() == coluna)
-                .findFirst()
-                .ifPresent(c -> c.abrir());
+        try {
+            campos.parallelStream()
+                    .filter(c -> c.getLinha() == linhas && c.getColuna() == coluna)
+                    .findFirst()
+                    .ifPresent(c -> c.abrir());
+        } catch (Explosion e) {
+            campos.forEach(c -> c.setAberto(true));
+            throw e;
+        }
     }
 
     public void marcar(int linhas, int coluna) {
