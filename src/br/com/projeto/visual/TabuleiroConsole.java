@@ -59,13 +59,14 @@ public class TabuleiroConsole {
                     if ("1".equals(digitado)) {
                         tab.abrir(xy.next(), xy.next());
                     } else if ("2".equals(digitado)) {
-                        tab.abrir(xy.next(), xy.next());
+                        tab.marcar(xy.next(), xy.next());
                     }
                 } catch (ValorCorretoException e) {
                     System.out.println("Entrada inválida, digite apenas números separados por vírgula.");
                 }
             }
 
+            System.out.println(tab);
             System.out.println("Você ganhou!!!");
         } catch (Explosion e) {
             System.out.println(tab);
